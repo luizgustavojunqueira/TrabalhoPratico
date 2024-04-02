@@ -36,8 +36,7 @@ int Scanner::getLine()
 }
 
 // Método que retorna o próximo token da entrada
-Token *
-Scanner::nextToken()
+Token *Scanner::nextToken()
 {
     Token *tok;
     string lexeme;
