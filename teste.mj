@@ -1,0 +1,31 @@
+// Identificadores
+teste12__3
+abcd
+variavel
+
+// RELOPS
+= == + - * && / ! != > < 
+
+/* A seguir temos as palavras
+reservadas da linguagem */
+class asv else extends false 
+if int length main new public
+return static String 
+System.out.println this true void while
+
+// SEPARADORES
+() [] {} ; . , 
+
+// SEPARADORES MISTURADOS
+([ }) ;[(),.
+
+// NUMEROS
+123
+5436
+36574567467
+456745
+345
+345
+7
+657
+53
