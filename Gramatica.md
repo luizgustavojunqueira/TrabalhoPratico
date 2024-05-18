@@ -9,7 +9,8 @@
 |_MethodDeclaration_| **public** _Type_ **ID** **( (** _Params_ **) ? )** {(_VarDeclaration_)* (_Statement_)* **return** _Expression_ **; }** |
 |_Params_| _Type_ **ID** (, _Type_ **ID**)*|
 |_Type_ | <ul><li>**int**([])?</li><li>**boolean**</li><li>**ID**</li><ul>|
-|_Statement_|<ul><li>{ ( _Statement_ ) }</li><li>**if**( _Expression_ ) _Statement_ **else** _Statement_</li><li>**while**( _Expression_ ) _Statement_</li><li>**System.out.println** ( _Expression_ ) ;</li><li>**ID=** _Expression_ ;</li><li>**ID** [ _Expression_ ]= _Expression_ ;</li><ul>|
+|_Statement_|<ul><li>{ ( _Statement_ ) }</li><li>**if**( _Expression_ ) _Statement_ **else** _Statement_</li><li>**while**( _Expression_ ) _Statement_</li><li>**System.out.println** ( _Expression_ ) ;</li><li>**ID** _Statement'_<ul>|
+|_Statement'_|<ul><li>= _Expression_ ;</li><li> [ _Expression_ ] = _Expression_ ; <ul>|
 |_Expression_|_RelExpression_ _Expression'_|
 |_Expression'_|**&&** _RelExpression_ _Expression'_|
 |_RelExpression_| _AddExpression_ _RelExpression'_|
