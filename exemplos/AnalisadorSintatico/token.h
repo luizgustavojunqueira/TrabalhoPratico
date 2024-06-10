@@ -7,7 +7,14 @@ using namespace std;
 enum Names 
 {
     UNDEF,//0
-    //CONTINUAR
+    ID,//1
+    PLUS,//2
+    MINUS,//3
+    MULT,//4
+    DIV,//5
+    NUMBER,//6
+    LPAREN,//7
+    RPAREN,//8
     END_OF_FILE//9
 };
 

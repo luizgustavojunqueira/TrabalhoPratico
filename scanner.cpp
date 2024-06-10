@@ -1,6 +1,7 @@
 #include "scanner.h"
 #include <vector>
 #include <algorithm>
+#include <cstring>
 
 vector<string> reserved_words = {"boolean", "class", "else", "extends", "false", "if",
                                  "int", "length", "main", "new", "public", "return",
@@ -17,7 +18,7 @@ Scanner::Scanner(string input)
     pos = 0;
     line = 1;
 
-    ifstream inputFile(input, ios::in);
+ifstream inputFile(input, ios::in);
     string line;
 
     if (inputFile.is_open())
@@ -244,7 +245,7 @@ Token *Scanner::nextToken()
             tok = new Token(SEP, LEFTBRACKET);
             return tok;
         case 20:
-            tok = new Token(SEP, RIGTHBRACKET);
+            tok = new Token(SEP, RIGHTBRACKET);
             return tok;
         case 21:
             tok = new Token(SEP, LEFTCURLYBRACKET);
@@ -275,7 +276,67 @@ Token *Scanner::nextToken()
         case 27:
             if (find(reserved_words.begin(), reserved_words.end(), lexeme) != reserved_words.end())
             {
-                tok = new Token(RESERVED_WORD, lexeme);
+                if(strcmp(lexeme.c_str(), "System.out.println") == 0)
+                {
+                    tok = new Token(SOUT);
+                }
+                else if (strcmp(lexeme.c_str(), "true") == 0)
+                {
+                    tok = new Token(TRUE);
+                }
+                else if (strcmp(lexeme.c_str(), "false") == 0)
+                {
+                    tok = new Token(FALSE);
+                }else if(strcmp(lexeme.c_str(), "int") == 0)
+                {
+                    tok = new Token(INT);
+                }else if(strcmp(lexeme.c_str(), "boolean") == 0)
+                {
+                    tok = new Token(BOOLEAN);
+                }else if(strcmp(lexeme.c_str(), "class") == 0)
+                {
+                    tok = new Token(CLASS);
+                }else if(strcmp(lexeme.c_str(), "else") == 0)
+                {
+                    tok = new Token(ELSE);
+                }else if(strcmp(lexeme.c_str(), "extends") == 0)
+                {
+                    tok = new Token(EXTENDS);
+                }else if(strcmp(lexeme.c_str(), "if") == 0)
+                {
+                    tok = new Token(IF);
+                }else if(strcmp(lexeme.c_str(), "length") == 0)
+                {
+                    tok = new Token(LENGTH);
+                }else if(strcmp(lexeme.c_str(), "main") == 0) 
+                {
+                    tok = new Token(MAIN);
+                }else if(strcmp(lexeme.c_str(), "new") == 0)
+                {
+                    tok = new Token(NEW);
+                }else if(strcmp(lexeme.c_str(), "public") == 0)
+                {
+                    tok = new Token(PUBLIC);
+                }else if(strcmp(lexeme.c_str(), "return") == 0)
+                {
+                    tok = new Token(RETURN);
+                }else if(strcmp(lexeme.c_str(), "static") == 0)
+                {
+                    tok = new Token(STATIC);
+                }else if(strcmp(lexeme.c_str(), "String") == 0)
+                {
+                    tok = new Token(STRING);
+                }else if(strcmp(lexeme.c_str(), "this") == 0)
+                {
+                    tok = new Token(THIS);
+                }else if(strcmp(lexeme.c_str(), "void") == 0)
+                {
+                    tok = new Token(VOID);
+                }else if(strcmp(lexeme.c_str(), "while") == 0)
+                {
+                    tok = new Token(WHILE);
+                }
+
             }
             else
             {

@@ -26,7 +26,7 @@ enum Names
     LEFTPAREN,         // 17
     RIGHTPAREN,        // 18
     LEFTBRACKET,       // 19
-    RIGTHBRACKET,      // 20
+    RIGHTBRACKET,      // 20
     LEFTCURLYBRACKET,  // 21
     RIGHTCURLYBRACKET, // 22
     SEMICOLON,         // 23
@@ -68,13 +68,13 @@ public:
     Token(int name)
     {
         this->name = name;
-        attribute = UNDEF;
+        attribute = name;
     }
 
     Token(int name, string l)
     {
         this->name = name;
-        attribute = UNDEF;
+        attribute = name;
         lexeme = l;
     }
 

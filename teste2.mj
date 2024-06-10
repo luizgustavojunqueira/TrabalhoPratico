@@ -1,0 +1,25 @@
+class Teste {
+ 
+  public static void main (String[] args){
+    System.out.println();
+
+  }
+}
+
+class B {
+  public int Func(int a, int b){
+    int x;
+    int y;
+
+    System.out.println(x + y);
+
+    if(x == 2){
+      x = 2;
+    }else{
+      x = 3;
+    }
+
+    return 1;
+  }
+
+}

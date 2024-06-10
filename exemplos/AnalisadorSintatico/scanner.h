@@ -7,7 +7,7 @@ class Scanner
         int pos;//Posição atual
     
     public:
-        //Construtor
+    //Construtor
         Scanner(string);
     
         //Método que retorna o próximo token da entrada
