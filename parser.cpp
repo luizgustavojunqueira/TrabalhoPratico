@@ -5,8 +5,8 @@ Parser::Parser(string input) { scanner = new Scanner(input); }
 void Parser::advance() { lToken = scanner->nextToken(); }
 
 void Parser::match(int t) {
-  cout << "Name " << lToken->name << " Attribute: " << lToken->attribute
-       << " Should be: " << t << endl;
+  //cout << "Name " << lToken->name << " Attribute: " << lToken->attribute
+  //     << " Should be: " << t << endl;
 
   if (lToken->name == t || lToken->attribute == t)
     advance();
@@ -24,7 +24,6 @@ void Parser::run() {
 }
 
 void Parser::program() {
-  // Program -> MainClass ( ClassDeclaration )* EOF
   mainClass();
   while (lToken->name == CLASS) {
     classDeclaration();
@@ -33,8 +32,6 @@ void Parser::program() {
 }
 
 void Parser::mainClass() {
-  // MainClass -> class ID { public static void main ( String [ ] ID ) {
-  // Statement } }
   match(CLASS);
   match(ID);
   match(LEFTCURLYBRACKET);
@@ -55,90 +52,92 @@ void Parser::mainClass() {
 }
 
 void Parser::statement() {
-  // Statement -> ID[Expression] = Expression | ID = Expression; | if (
-  // Expression ) Statement else Statement | while ( Expression ) Statement | {
-  // Statement* } | System.out.println ( Expression ) ;
 
-  if (lToken->name == ID) {
-    match(ID);
-    if (lToken->attribute == LEFTBRACKET) {
-      match(LEFTBRACKET);
-      expression();
-      match(RIGHTBRACKET);
-      match(ATRIBB);
-      expression();
-      match(SEMICOLON);
-    } else if (lToken->attribute == ATRIBB) {
-      match(ATRIBB);
-      expression();
-      match(SEMICOLON);
+  if (lToken->attribute == LEFTCURLYBRACKET) {
+    match(LEFTCURLYBRACKET);
+    while (lToken->attribute == IF || lToken->attribute == WHILE ||
+           lToken->attribute == SOUT || lToken->attribute == ID ||
+           lToken->attribute == LEFTCURLYBRACKET) {
+      statement();
     }
-  } else if (lToken->name == IF) {
+    match(RIGHTCURLYBRACKET);
+  } else if (lToken->attribute == IF) {
     match(IF);
     match(LEFTPAREN);
     expression();
     match(RIGHTPAREN);
+    match(RIGHTPAREN);
     statement();
     match(ELSE);
     statement();
-  } else if (lToken->name == WHILE) {
+  } else if (lToken->attribute == WHILE) {
     match(WHILE);
     match(LEFTPAREN);
     expression();
     match(RIGHTPAREN);
     statement();
-  } else if (lToken->attribute == LEFTCURLYBRACKET) {
-    match(LEFTCURLYBRACKET);
-    while (lToken->name == ID || lToken->name == IF || lToken->name == WHILE ||
-           lToken->name == SOUT || lToken->name == EQUAL) {
-      statement();
-    }
-    match(RIGHTCURLYBRACKET);
   } else if (lToken->name == SOUT) {
     match(SOUT);
     match(LEFTPAREN);
     expression();
     match(RIGHTPAREN);
     match(SEMICOLON);
+  } else if (lToken->name == ID) {
+    match(ID);
+    if (lToken->attribute == ATRIBB) {
+      match(ATRIBB);
+      expression();
+      match(SEMICOLON);
+    } else if (lToken->attribute == LEFTBRACKET) {
+      match(LEFTBRACKET);
+      expression();
+      match(RIGHTBRACKET);
+      match(ATRIBB);
+      expression();
+      match(SEMICOLON);
+    }
   }
 }
-
 void Parser::expression() {
-  // Expression -> Expression && RelExpression | RelExpression
   relExpression();
+  expressionLinha();
+}
+
+void Parser::expressionLinha() {
   if (lToken->attribute == AND) {
     match(AND);
     expression();
   }
 }
 
-void Parser::expressionList() {
-  expression();
-  while (lToken->attribute == COMMA) {
-    match(COMMA);
-    expression();
-  }
-}
-
 void Parser::relExpression() {
   addExpression();
+  relExpressionLinha();
+}
+
+void Parser::relExpressionLinha() {
   if (lToken->attribute == LESSTHAN) {
     match(LESSTHAN);
-    addExpression();
+    relExpression();
   } else if (lToken->attribute == GREATERTHAN) {
     match(GREATERTHAN);
-    addExpression();
+    relExpression();
   } else if (lToken->attribute == EQUAL) {
     match(EQUAL);
-    addExpression();
+    relExpression();
+    relExpressionLinha();
   } else if (lToken->attribute == NOTEQUAL) {
     match(NOTEQUAL);
-    addExpression();
+    relExpression();
   }
 }
 
 void Parser::addExpression() {
   multExpression();
+  addExpressionLinha();
+}
+
+void Parser::addExpressionLinha() {
   if (lToken->attribute == PLUS) {
     match(PLUS);
     addExpression();
@@ -150,6 +149,10 @@ void Parser::addExpression() {
 
 void Parser::multExpression() {
   unExpression();
+  multExpressionLinha();
+}
+
+void Parser::multExpressionLinha() {
   if (lToken->attribute == MULT) {
     match(MULT);
     multExpression();
@@ -157,44 +160,6 @@ void Parser::multExpression() {
     match(DIV);
     multExpression();
   }
-}
-
-void Parser::primExpression() {
-  if (lToken->name == ID) {
-    match(ID);
-  } else if (lToken->name == TRUE) {
-    match(TRUE);
-  } else if (lToken->name == FALSE) {
-    match(FALSE);
-  } else if (lToken->name == NEW) {
-    match(NEW);
-    match(ID);
-    match(LEFTPAREN);
-    match(RIGHTPAREN);
-  } else if (lToken->attribute == LEFTPAREN) {
-    match(LEFTPAREN);
-    expression();
-    match(RIGHTPAREN);
-  }
-}
-
-void Parser::classDeclaration() {
-  // ClassDeclaration -> class ID (extends ID)? { VarDeclaration*
-  // MethodDeclaration* }
-  match(CLASS);
-  match(ID);
-  if (lToken->name == EXTENDS) {
-    match(EXTENDS);
-    match(ID);
-  }
-  match(LEFTCURLYBRACKET);
-  while (lToken->name == INT || lToken->name == BOOLEAN || lToken->name == ID) {
-    varDeclaration();
-  }
-  while (lToken->name == PUBLIC) {
-    methodDeclaration();
-  }
-  match(RIGHTCURLYBRACKET);
 }
 
 void Parser::unExpression() {
@@ -212,10 +177,7 @@ void Parser::unExpression() {
     match(FALSE);
   } else if (lToken->name == NEW) {
     match(NEW);
-    match(INT);
-    match(LEFTBRACKET);
-    expression();
-    match(RIGHTBRACKET);
+    unExpressionLinha();
   } else {
     primExpression();
 
@@ -223,11 +185,85 @@ void Parser::unExpression() {
       match(LEFTBRACKET);
       expression();
       match(RIGHTBRACKET);
-    } else if (lToken->attribute == DOT) {
-      match(DOT);
+    } else if (lToken->attribute == LENGTH) {
       match(LENGTH);
     }
   }
+}
+
+void Parser::unExpressionLinha() {
+  if (lToken->attribute == INT) {
+    match(INT);
+    match(LEFTBRACKET);
+    expression();
+    match(RIGHTBRACKET);
+  }else if (lToken->attribute == ID){
+    match(ID);
+    match(LEFTPAREN);
+    match(RIGHTPAREN);
+  }
+}
+
+void Parser::primExpression() {
+  if (lToken->attribute == ID) {
+
+    match(ID);
+    primExpressionLinha();
+  } else if (lToken->attribute == THIS) {
+    match(THIS);
+    primExpressionLinha();
+  } else if (lToken->attribute == LEFTPAREN) {
+    match(LEFTPAREN);
+    expression();
+    match(RIGHTPAREN);
+    primExpressionLinha();
+  }
+}
+
+void Parser::primExpressionLinha() {
+  if (lToken->attribute == DOT) {
+    match(DOT);
+    if (lToken->attribute == ID) {
+
+      match(ID);
+
+      primExpressionDuasLinha();
+      primExpressionLinha();
+    }
+  }
+}
+
+void Parser::primExpressionDuasLinha() {
+  if (lToken->attribute == LEFTPAREN) {
+    match(LEFTPAREN);
+    expressionList();
+    match(RIGHTPAREN);
+  }
+}
+
+void Parser::expressionList() {
+  expression();
+  while (lToken->attribute == COMMA) {
+    match(COMMA);
+    expression();
+  }
+}
+
+void Parser::classDeclaration() {
+  match(CLASS);
+  match(ID);
+  if (lToken->name == EXTENDS) {
+    match(EXTENDS);
+    match(ID);
+  }
+  match(LEFTCURLYBRACKET);
+  while (lToken->name == INT || lToken->name == BOOLEAN || lToken->name == ID) {
+    varDeclaration();
+  }
+  while (lToken->name == PUBLIC) {
+    methodDeclaration();
+  }
+  match(RIGHTCURLYBRACKET);
 }
 
 void Parser::varDeclaration() {
@@ -237,8 +273,6 @@ void Parser::varDeclaration() {
 }
 
 void Parser::methodDeclaration() {
-  // MethodDeclaration -> public Type ID ( Params ) { VarDeclaration* Statement*
-  // return Expression; }
   match(PUBLIC);
   type();
   match(ID);
@@ -250,7 +284,7 @@ void Parser::methodDeclaration() {
     varDeclaration();
   }
   while (lToken->name == ID || lToken->name == IF || lToken->name == WHILE ||
-         lToken->name == SOUT || lToken->attribute == EQUAL) {
+         lToken->name == SOUT || lToken->attribute == LEFTCURLYBRACKET) {
     statement();
   }
   match(RETURN);
@@ -260,9 +294,8 @@ void Parser::methodDeclaration() {
 }
 
 void Parser::params() {
-  // Params -> Type ID (, Type ID)*
-  
-  if(lToken->name == INT || lToken->name == BOOLEAN || lToken->name == ID){
+
+  if (lToken->name == INT || lToken->name == BOOLEAN || lToken->name == ID) {
     type();
     match(ID);
   }

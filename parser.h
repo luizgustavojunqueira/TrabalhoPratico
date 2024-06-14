@@ -22,11 +22,18 @@ class Parser
         void params();
         void type();
         void expression();
+        void expressionLinha();
         void relExpression();
+        void relExpressionLinha();
         void addExpression();
+        void addExpressionLinha();
         void multExpression();
+        void multExpressionLinha();
         void unExpression();
+        void unExpressionLinha();
         void primExpression();
+        void primExpressionLinha();
+        void primExpressionDuasLinha();
         void expressionList();
         //Continuar....
         void error(string);

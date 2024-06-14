@@ -1,23 +1,139 @@
-class Teste {
- 
-  public static void main (String[] args){
-    System.out.println();
+class Main{
 
+  public static void main(String[] args){
+    {
+  
+      System.out.println(1+1);
+      System.out.println((1+(1*2) + 3 - 4)/5);
+
+
+      if(!(2 == 0)){
+        System.out.println((1+1));
+      }else{
+        System.out.println(1);
+      }
+
+      while(true){
+        System.out.println(1);
+        a = 1;
+      }
+
+      a = 1;
+      a[1] = 1;
+
+    }
   }
+
 }
 
-class B {
-  public int Func(int a, int b){
+class Class2{
+  int a;
+  boolean b;
+  int[] a;
+
+  public int funcao(){
     int x;
     int y;
 
-    System.out.println(x + y);
+    System.out.println(1);
+    System.out.println(1);
+    
+      if(!(2 == 0)){
+        System.out.println((1+1));
+        }else{
+        System.out.println(1);
+      }
 
-    if(x == 2){
-      x = 2;
-    }else{
-      x = 3;
-    }
+      while(true){
+        System.out.println(1);
+        a = 1;
+      }
+
+
+      {
+        System.out.println(1);
+        System.out.println(1);
+        System.out.println(1);
+        {
+          System.out.println(1);
+          System.out.println(1);
+          System.out.println(1);
+        }
+
+      }
+
+      a = 1;
+      a[1] = 1;
+
+    return 1;
+  }
+
+  public int funcao2(int a, int b, TESTE t){
+    int x;
+    int y;
+    UAU u;
+
+    System.out.println(1);
+    System.out.println(1);
+    
+      if(!(2 == 0)){
+        System.out.println((1+1));
+        }else{
+        System.out.println(1);
+      }
+
+      while(true){
+        System.out.println(1);
+        a = 1;
+      }
+
+
+      {
+        System.out.println(1);
+        System.out.println(1);
+        System.out.println(1);
+        {
+          System.out.println(1);
+          System.out.println(1);
+          System.out.println(1);
+        }
+
+      }
+
+      a = 1;
+      a[1] = 1;
+
+    return 1;
+  }
+}
+
+
+class TestingExpressionsClass extends Class2{
+    
+  public int func(){
+  
+    System.out.println(1 < 1);
+    System.out.println(1 > 1);
+    System.out.println(1 == 1);
+    System.out.println(1 && 1);
+    System.out.println(1 != 1);
+    System.out.println(1 + 1);
+    System.out.println(1 - 1);
+    System.out.println(1 * 1);
+    System.out.println(1 / 1);
+    System.out.println(!1);
+    System.out.println(-1);
+    System.out.println(true);
+    System.out.println(false);
+    System.out.println(new int[1]);
+    System.out.println(a.length);
+    System.out.println(this.length);
+    System.out.println((new TESTE()).length);
+    System.out.println(new TESTE());
+    System.out.println(teste.TESTE);
+    System.out.println(teste[1+1]);
+    System.out.println(this.TESTE(1));
+    System.out.println(aa.TESTE(1, 2, true, false));
 
     return 1;
   }

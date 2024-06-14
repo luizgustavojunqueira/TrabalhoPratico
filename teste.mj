@@ -1,5 +1,5 @@
 // Identificadores
-teste12__3
+te.ste12__3
 abcd
 variavel
 
@@ -29,3 +29,7 @@ System.out.println this true void while
 7
 657
 53
+
+
+
+System.out.println(a.length);
